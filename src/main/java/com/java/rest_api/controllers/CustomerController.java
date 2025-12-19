@@ -18,8 +18,8 @@ public class CustomerController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Customer customer) {
         try {
-            customerService.save(customer);
-            return ResponseEntity.ok("Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been saved successfully");
+            com.java.rest_api.models.db.Customer savedCustomer = customerService.save(customer);
+            return ResponseEntity.ok("Customer " + savedCustomer.getFirstName() + " " + savedCustomer.getLastName() + " has been saved successfully");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Customer record could not be saved due to: " + e.getMessage());
         }
@@ -30,7 +30,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getCustomers());
     }
 
-    @GetMapping("/getCustomer")
+    @GetMapping("/getCustomerByEmail")
     public ResponseEntity<Customer> getCustomerByEmail(@RequestParam String email) {
         Customer customer = customerService.getCustomerByEmail(email);
 
@@ -38,6 +38,23 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(customer);
+        }
+    }
+
+    @PostMapping("/deleteByEmail")
+    public ResponseEntity<com.java.rest_api.models.db.Customer> deleteByEmail(@RequestParam String email) {
+        try {
+            com.java.rest_api.models.db.Customer customer = customerService.findByEmail(email);
+
+            if (customer == null) {
+                return ResponseEntity.notFound().build();
+            }
+            customer.setDeleted(true);
+
+            com.java.rest_api.models.db.Customer savedCustomer = customerService.delete(customer);
+            return ResponseEntity.ok(savedCustomer);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 }

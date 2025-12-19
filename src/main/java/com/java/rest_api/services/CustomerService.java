@@ -31,6 +31,19 @@ public class CustomerService {
         }
     }
 
+    public com.java.rest_api.models.db.Customer delete(com.java.rest_api.models.db.Customer customer) {
+        try {
+            return customerRepository.save(customer);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public com.java.rest_api.models.db.Customer findByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
     public List<Customer> getCustomers() {
         List<com.java.rest_api.models.db.Customer> dbCustomers = customerRepository.findAll();
         List<Customer> customers = new ArrayList<>();
