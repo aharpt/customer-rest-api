@@ -46,8 +46,8 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/deleteByEmail")
-    public ResponseEntity<com.java.rest_api.models.db.Customer> deleteByEmail(@RequestParam String email) {
+    @PostMapping("/deleteCustomerByEmail")
+    public ResponseEntity<com.java.rest_api.models.db.Customer> deleteCustomerByEmail(@RequestParam String email) {
         try {
             com.java.rest_api.models.db.Customer customer = customerService.findByEmail(email);
 
