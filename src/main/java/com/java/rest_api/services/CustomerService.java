@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -80,15 +79,15 @@ public class CustomerService {
     }
 
     public Customer getCustomerByEmail(String email) {
-        Optional<com.java.rest_api.models.db.Customer> dbCustomer = customerRepository.findAll().stream().filter(c -> c.getEmail().equals(email)).findFirst();
+        com.java.rest_api.models.db.Customer dbCustomer = customerRepository.findByEmail(email);
 
-        if (dbCustomer.isPresent()) {
+        if (dbCustomer != null) {
             Customer customer = new Customer();
 
-            customer.setFirstName(dbCustomer.get().getFirstName());
-            customer.setLastName(dbCustomer.get().getLastName());
-            customer.setEmail(dbCustomer.get().getEmail());
-            customer.setDeleted(dbCustomer.get().getDeleted());
+            customer.setFirstName(dbCustomer.getFirstName());
+            customer.setLastName(dbCustomer.getLastName());
+            customer.setEmail(dbCustomer.getEmail());
+            customer.setDeleted(dbCustomer.getDeleted());
 
             return customer;
         } else {
