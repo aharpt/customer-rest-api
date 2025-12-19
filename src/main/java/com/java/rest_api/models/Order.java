@@ -1,11 +1,20 @@
 package com.java.rest_api.models;
 
 public class Order {
+    private Long id;
     private Long customerId;
     private Long productId;
     private String productName;
     private Integer quantity;
     private Double price;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getCustomerId() {
         return customerId;
@@ -50,7 +59,8 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "customerId=" + customerId +
+                "id=" + id +
+                ", customerId=" + customerId +
                 ", productId=" + productId +
                 ", productName='" + productName + '\'' +
                 ", quantity=" + quantity +

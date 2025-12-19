@@ -48,6 +48,7 @@ public class ProductService {
 
         for (com.java.rest_api.models.db.Product dbProduct : dbProducts) {
             Product product = new Product();
+            product.setId(dbProduct.getId());
             product.setProductName(dbProduct.getProductName());
             product.setCurrentInventory(dbProduct.getCurrentInventory());
             product.setProductPrice(dbProduct.getProductPrice());

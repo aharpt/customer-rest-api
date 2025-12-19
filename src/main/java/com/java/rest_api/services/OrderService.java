@@ -30,4 +30,22 @@ public class OrderService {
 
         return orders;
     }
+
+    public List<Order> getOrdersByCustomerId(Long customerId) {
+        List<com.java.rest_api.models.db.Order> dbOrders = orderRepository.findByCustomerId(customerId);
+        List<Order> orders = new ArrayList<>();
+
+        for (com.java.rest_api.models.db.Order dbOrder : dbOrders) {
+            Order order = new Order();
+            order.setId(dbOrder.getId());
+            order.setCustomerId(dbOrder.getCustomerId());
+            order.setProductId(dbOrder.getProductId());
+            order.setQuantity(dbOrder.getQuantity());
+            order.setPrice(dbOrder.getPrice());
+
+            orders.add(order);
+        }
+
+        return orders;
+    }
 }
