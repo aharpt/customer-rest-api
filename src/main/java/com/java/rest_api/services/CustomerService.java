@@ -54,6 +54,22 @@ public class CustomerService {
             customer.setLastName(dbCustomer.getLastName());
             customer.setEmail(dbCustomer.getEmail());
             customer.setDeleted(dbCustomer.getDeleted());
+            customers.add(customer);
+        }
+
+        return customers;
+    }
+
+    public List<Customer> getActiveCustomers() {
+        List<com.java.rest_api.models.db.Customer> dbCustomers = customerRepository.findAll();
+        List<Customer> customers = new ArrayList<>();
+
+        for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
+            Customer customer = new Customer();
+            customer.setFirstName(dbCustomer.getFirstName());
+            customer.setLastName(dbCustomer.getLastName());
+            customer.setEmail(dbCustomer.getEmail());
+            customer.setDeleted(dbCustomer.getDeleted());
 
             if (!dbCustomer.getDeleted()) {
                 customers.add(customer);
@@ -66,7 +82,7 @@ public class CustomerService {
     public Customer getCustomerByEmail(String email) {
         Optional<com.java.rest_api.models.db.Customer> dbCustomer = customerRepository.findAll().stream().filter(c -> c.getEmail().equals(email)).findFirst();
 
-        if (dbCustomer.isPresent() && !dbCustomer.get().getDeleted()) {
+        if (dbCustomer.isPresent()) {
             Customer customer = new Customer();
 
             customer.setFirstName(dbCustomer.get().getFirstName());

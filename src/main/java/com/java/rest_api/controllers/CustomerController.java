@@ -30,6 +30,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getCustomers());
     }
 
+    @GetMapping("/getActiveCustomers")
+    public ResponseEntity<List<Customer>> getActiveCustomers() {
+        return ResponseEntity.ok(customerService.getActiveCustomers());
+    }
+
     @GetMapping("/getCustomerByEmail")
     public ResponseEntity<Customer> getCustomerByEmail(@RequestParam String email) {
         Customer customer = customerService.getCustomerByEmail(email);
