@@ -1,7 +1,6 @@
 package com.java.rest_api.models;
 
 public class Customer {
-
     private String firstName;
     private String lastName;
     private String email;
