@@ -5,6 +5,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
+    private Boolean deleted;
 
     public String getFirstName() {
         return firstName;
@@ -30,12 +31,21 @@ public class Customer {
         this.email = email;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }

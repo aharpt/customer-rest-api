@@ -21,6 +21,7 @@ public class CustomerService {
         dbCustomer.setFirstName(customer.getFirstName());
         dbCustomer.setLastName(customer.getLastName());
         dbCustomer.setEmail(customer.getEmail());
+        dbCustomer.setDeleted(false);
 
         try {
             return customerRepository.save(dbCustomer);
@@ -39,8 +40,11 @@ public class CustomerService {
             customer.setFirstName(dbCustomer.getFirstName());
             customer.setLastName(dbCustomer.getLastName());
             customer.setEmail(dbCustomer.getEmail());
+            customer.setDeleted(dbCustomer.getDeleted());
 
-            customers.add(customer);
+            if (!dbCustomer.getDeleted()) {
+                customers.add(customer);
+            }
         }
 
         return customers;
@@ -49,12 +53,13 @@ public class CustomerService {
     public Customer getCustomerByEmail(String email) {
         Optional<com.java.rest_api.models.db.Customer> dbCustomer = customerRepository.findAll().stream().filter(c -> c.getEmail().equals(email)).findFirst();
 
-        if (dbCustomer.isPresent()) {
+        if (dbCustomer.isPresent() && !dbCustomer.get().getDeleted()) {
             Customer customer = new Customer();
 
             customer.setFirstName(dbCustomer.get().getFirstName());
             customer.setLastName(dbCustomer.get().getLastName());
             customer.setEmail(dbCustomer.get().getEmail());
+            customer.setDeleted(dbCustomer.get().getDeleted());
 
             return customer;
         } else {

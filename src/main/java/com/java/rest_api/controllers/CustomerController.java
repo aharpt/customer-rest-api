@@ -3,7 +3,6 @@ package com.java.rest_api.controllers;
 import com.java.rest_api.models.Customer;
 import com.java.rest_api.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +19,15 @@ public class CustomerController {
     public ResponseEntity<String> save(@RequestBody Customer customer) {
         try {
             customerService.save(customer);
-            return new ResponseEntity<>("Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been saved successfully", HttpStatus.OK);
+            return ResponseEntity.ok("Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been saved successfully");
         } catch (Exception e) {
-            return new ResponseEntity<>("Customer record could not be saved due to: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.internalServerError().body("Customer record could not be saved due to: " + e.getMessage());
         }
     }
 
     @GetMapping("/getCustomers")
     public ResponseEntity<List<Customer>> getCustomers() {
-        return new ResponseEntity<>(customerService.getCustomers(), HttpStatus.OK);
+        return ResponseEntity.ok(customerService.getCustomers());
     }
 
     @GetMapping("/getCustomer")
@@ -36,9 +35,9 @@ public class CustomerController {
         Customer customer = customerService.getCustomerByEmail(email);
 
         if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         } else {
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+            return ResponseEntity.ok(customer);
         }
     }
 }

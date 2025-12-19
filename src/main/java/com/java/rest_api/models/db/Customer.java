@@ -19,6 +19,9 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     public Long getIndex() {
         return index;
     }
@@ -47,13 +50,22 @@ public class Customer {
         this.email = email;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "index='" + index + '\'' +
+                "index=" + index +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }
