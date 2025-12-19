@@ -14,7 +14,6 @@ public class CustomerService {
     public com.java.rest_api.models.db.Customer save(Customer customer) {
         com.java.rest_api.models.db.Customer dbCustomer = new com.java.rest_api.models.db.Customer();
 
-        dbCustomer.setIndex("12345");
         dbCustomer.setFirstName(customer.getFirstName());
         dbCustomer.setLastName(customer.getLastName());
         dbCustomer.setEmail(customer.getEmail());

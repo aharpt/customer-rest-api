@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "customers")
 public class Customer {
+
     @Id
-    private String index;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long index;
 
     @Column(name = "firstname")
     private String firstName;
@@ -17,12 +19,8 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
-    public String getIndex() {
+    public Long getIndex() {
         return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
     }
 
     public String getFirstName() {

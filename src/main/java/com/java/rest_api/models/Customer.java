@@ -2,18 +2,9 @@ package com.java.rest_api.models;
 
 public class Customer {
 
-    private String customerId;
     private String firstName;
     private String lastName;
     private String email;
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -42,8 +33,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId='" + customerId + '\'' +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
