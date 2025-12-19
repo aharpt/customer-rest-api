@@ -8,7 +8,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long index;
+    private Long id;
 
     @Column(name = "firstname")
     private String firstName;
@@ -22,8 +22,8 @@ public class Customer {
     @Column(name = "deleted")
     private Boolean deleted;
 
-    public Long getIndex() {
-        return index;
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -61,7 +61,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "index=" + index +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
