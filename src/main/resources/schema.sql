@@ -1,3 +1,4 @@
+drop table if exists orders;
 drop table if exists customers;
 drop table if exists products;
 
@@ -14,4 +15,13 @@ create table if not exists products (
     product_name text unique not null,
     current_inventory integer not null,
     product_price decimal(15, 2) not null
+);
+
+create table if not exists orders (
+      id bigserial primary key,
+      customer_id bigserial not null references customers(id),
+      product_id bigserial not null references products(id),
+      product_name text not null references products(product_name),
+      quantity integer not null,
+      price decimal(15, 2) not null
 );
