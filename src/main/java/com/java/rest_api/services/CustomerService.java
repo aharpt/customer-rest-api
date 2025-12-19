@@ -5,6 +5,10 @@ import com.java.rest_api.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CustomerService {
 
@@ -22,6 +26,38 @@ public class CustomerService {
             return customerRepository.save(dbCustomer);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Customer> getCustomers() {
+        List<com.java.rest_api.models.db.Customer> dbCustomers = customerRepository.findAll();
+        List<Customer> customers = new ArrayList<>();
+
+        for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
+            Customer customer = new Customer();
+            customer.setFirstName(dbCustomer.getFirstName());
+            customer.setLastName(dbCustomer.getLastName());
+            customer.setEmail(dbCustomer.getEmail());
+
+            customers.add(customer);
+        }
+
+        return customers;
+    }
+
+    public Customer getCustomerByEmail(String email) {
+        Optional<com.java.rest_api.models.db.Customer> dbCustomer = customerRepository.findAll().stream().filter(c -> c.getEmail().equals(email)).findFirst();
+
+        if (dbCustomer.isPresent()) {
+            Customer customer = new Customer();
+
+            customer.setFirstName(dbCustomer.get().getFirstName());
+            customer.setLastName(dbCustomer.get().getLastName());
+            customer.setEmail(dbCustomer.get().getEmail());
+
+            return customer;
+        } else {
             return null;
         }
     }
