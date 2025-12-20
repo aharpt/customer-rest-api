@@ -49,6 +49,25 @@ public class OrderService {
         return orders;
     }
 
+    public List<Order> getOrdersByProductId(Long productId) {
+        List<com.java.rest_api.models.db.Order> dbOrders = orderRepository.findByProductId(productId);
+        List<Order> orders = new ArrayList<>();
+
+        for (com.java.rest_api.models.db.Order dbOrder : dbOrders) {
+            Order order = new Order();
+            order.setId(dbOrder.getId());
+            order.setCustomerId(dbOrder.getCustomerId());
+            order.setProductId(dbOrder.getProductId());
+            order.setProductName(dbOrder.getProductName());
+            order.setQuantity(dbOrder.getQuantity());
+            order.setPrice(dbOrder.getPrice());
+
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
     public com.java.rest_api.models.db.Order save(Order order) {
         com.java.rest_api.models.db.Order dbOrder = new com.java.rest_api.models.db.Order();
 

@@ -2,8 +2,10 @@ package com.java.rest_api.controllers;
 
 import com.java.rest_api.models.Order;
 import com.java.rest_api.models.db.Customer;
+import com.java.rest_api.models.db.Product;
 import com.java.rest_api.services.CustomerService;
 import com.java.rest_api.services.OrderService;
+import com.java.rest_api.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ public class OrderController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/getOrders")
     public ResponseEntity<List<Order>> getOrders() {
@@ -38,6 +43,20 @@ public class OrderController {
             }
 
             return ResponseEntity.ok(orderService.getOrdersByCustomerId(customer.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/getOrdersByProduct")
+    public ResponseEntity<List<Order>> getOrdersByProduct(@RequestParam String productName) {
+        try {
+            Product product = productService.getProductByName(productName);
+            if (product == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(orderService.getOrdersByProductId(product.getId()));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
