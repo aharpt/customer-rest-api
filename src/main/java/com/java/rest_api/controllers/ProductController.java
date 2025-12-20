@@ -1,6 +1,7 @@
 package com.java.rest_api.controllers;
 
 import com.java.rest_api.models.Product;
+import com.java.rest_api.models.db.DBProduct;
 import com.java.rest_api.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ProductController {
 
     @GetMapping("/getProductByName")
     public ResponseEntity<Product> getProductByName(@RequestParam String productName) {
-        com.java.rest_api.models.db.Product dbProduct = productService.getProductByName(productName);
+        DBProduct dbProduct = productService.getProductByName(productName);
 
         if (dbProduct != null) {
             Product product = new Product();
@@ -46,15 +47,15 @@ public class ProductController {
     }
 
     @PostMapping("/updateProductByName")
-    public ResponseEntity<com.java.rest_api.models.db.Product> updateProductByName(@RequestParam String productName, @RequestBody Product product) {
+    public ResponseEntity<DBProduct> updateProductByName(@RequestParam String productName, @RequestBody Product product) {
         try {
-            com.java.rest_api.models.db.Product dbProduct = productService.getProductByName(productName);
+            DBProduct dbProduct = productService.getProductByName(productName);
 
             if (dbProduct != null) {
                 dbProduct.setCurrentInventory(product.getCurrentInventory());
                 dbProduct.setProductPrice(product.getProductPrice());
 
-                com.java.rest_api.models.db.Product savedProduct = productService.update(dbProduct);
+                DBProduct savedProduct = productService.update(dbProduct);
 
                 return ResponseEntity.ok(savedProduct);
             } else {

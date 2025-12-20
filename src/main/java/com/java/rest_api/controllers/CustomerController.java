@@ -1,6 +1,7 @@
 package com.java.rest_api.controllers;
 
 import com.java.rest_api.models.Customer;
+import com.java.rest_api.models.db.DBCustomer;
 import com.java.rest_api.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class CustomerController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Customer customer) {
         try {
-            com.java.rest_api.models.db.Customer savedCustomer = customerService.save(customer);
+            DBCustomer savedCustomer = customerService.save(customer);
             return ResponseEntity.ok("Customer " + savedCustomer.getFirstName() + " " + savedCustomer.getLastName() + " has been saved successfully");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Customer record could not be saved due to: " + e.getMessage());
@@ -47,16 +48,16 @@ public class CustomerController {
     }
 
     @PostMapping("/deleteCustomerByEmail")
-    public ResponseEntity<com.java.rest_api.models.db.Customer> deleteCustomerByEmail(@RequestParam String email) {
+    public ResponseEntity<DBCustomer> deleteCustomerByEmail(@RequestParam String email) {
         try {
-            com.java.rest_api.models.db.Customer customer = customerService.findByEmail(email);
+            DBCustomer customer = customerService.findByEmail(email);
 
             if (customer == null) {
                 return ResponseEntity.notFound().build();
             }
             customer.setDeleted(true);
 
-            com.java.rest_api.models.db.Customer savedCustomer = customerService.delete(customer);
+            DBCustomer savedCustomer = customerService.delete(customer);
             return ResponseEntity.ok(savedCustomer);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
