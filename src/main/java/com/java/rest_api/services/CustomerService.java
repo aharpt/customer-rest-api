@@ -1,6 +1,7 @@
 package com.java.rest_api.services;
 
 import com.java.rest_api.models.Customer;
+import com.java.rest_api.models.db.DBCustomer;
 import com.java.rest_api.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public com.java.rest_api.models.db.Customer save(Customer customer) {
-        com.java.rest_api.models.db.Customer dbCustomer = new com.java.rest_api.models.db.Customer();
+    public DBCustomer save(Customer customer) {
+        DBCustomer dbCustomer = new DBCustomer();
         dbCustomer.setFirstName(customer.getFirstName());
         dbCustomer.setLastName(customer.getLastName());
         dbCustomer.setEmail(customer.getEmail());
@@ -29,7 +30,7 @@ public class CustomerService {
         }
     }
 
-    public com.java.rest_api.models.db.Customer delete(com.java.rest_api.models.db.Customer customer) {
+    public DBCustomer delete(DBCustomer customer) {
         try {
             return customerRepository.save(customer);
         } catch (Exception e) {
@@ -38,15 +39,15 @@ public class CustomerService {
         }
     }
 
-    public com.java.rest_api.models.db.Customer findByEmail(String email) {
+    public DBCustomer findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 
     public List<Customer> getCustomers() {
-        List<com.java.rest_api.models.db.Customer> dbCustomers = customerRepository.findAll();
+        List<DBCustomer> dbCustomers = customerRepository.findAll();
         List<Customer> customers = new ArrayList<>();
 
-        for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
+        for (DBCustomer dbCustomer : dbCustomers) {
             Customer customer = new Customer();
             customer.setId(dbCustomer.getId());
             customer.setFirstName(dbCustomer.getFirstName());
@@ -60,10 +61,10 @@ public class CustomerService {
     }
 
     public List<Customer> getActiveCustomers() {
-        List<com.java.rest_api.models.db.Customer> dbCustomers = customerRepository.findAll();
+        List<DBCustomer> dbCustomers = customerRepository.findAll();
         List<Customer> customers = new ArrayList<>();
 
-        for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
+        for (DBCustomer dbCustomer : dbCustomers) {
             Customer customer = new Customer();
             customer.setId(dbCustomer.getId());
             customer.setFirstName(dbCustomer.getFirstName());
@@ -80,7 +81,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerByEmail(String email) {
-        com.java.rest_api.models.db.Customer dbCustomer = customerRepository.findByEmail(email);
+        DBCustomer dbCustomer = customerRepository.findByEmail(email);
 
         if (dbCustomer != null) {
             Customer customer = new Customer();

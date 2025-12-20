@@ -1,8 +1,9 @@
 package com.java.rest_api.controllers;
 
 import com.java.rest_api.models.Order;
-import com.java.rest_api.models.db.Customer;
-import com.java.rest_api.models.db.Product;
+import com.java.rest_api.models.db.DBCustomer;
+import com.java.rest_api.models.db.DBOrder;
+import com.java.rest_api.models.db.DBProduct;
 import com.java.rest_api.services.CustomerService;
 import com.java.rest_api.services.OrderService;
 import com.java.rest_api.services.ProductService;
@@ -37,7 +38,7 @@ public class OrderController {
     @GetMapping("/getOrdersByCustomer")
     public ResponseEntity<List<Order>> getOrdersByCustomer(@RequestParam String email) {
         try {
-            Customer customer = customerService.findByEmail(email);
+            DBCustomer customer = customerService.findByEmail(email);
             if (customer == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -51,7 +52,7 @@ public class OrderController {
     @GetMapping("/getOrdersByProduct")
     public ResponseEntity<List<Order>> getOrdersByProduct(@RequestParam String productName) {
         try {
-            Product product = productService.getProductByName(productName);
+            DBProduct product = productService.getProductByName(productName);
             if (product == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -65,7 +66,7 @@ public class OrderController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Order order) {
         try {
-            com.java.rest_api.models.db.Order savedOrder = orderService.save(order);
+            DBOrder savedOrder = orderService.save(order);
             return ResponseEntity.ok("Order of " + savedOrder.getProductName() + " has been saved successfully");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Order could not be saved due to: " + e.getMessage());
