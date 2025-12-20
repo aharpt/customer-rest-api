@@ -7,6 +7,13 @@ import com.java.rest_api.models.db.DBProduct;
 import com.java.rest_api.services.CustomerService;
 import com.java.rest_api.services.OrderService;
 import com.java.rest_api.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/order")
+@Tag(name = "Order Management", description = "APIs for managing orders")
 public class OrderController {
 
     @Autowired
@@ -26,6 +34,18 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
+    @Operation(summary = "Retrieve existing orders", description = "Retrieves all existing orders")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Order.class))
+                            )
+                    }),
+            @ApiResponse(responseCode = "500",
+                    content = @Content(schema = @Schema()))
+    })
     @GetMapping("/getOrders")
     public ResponseEntity<List<Order>> getOrders() {
         try {
@@ -35,6 +55,18 @@ public class OrderController {
         }
     }
 
+    @Operation(summary = "Retrieve existing orders by customer", description = "Retrieves all existing orders by customer")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Order.class))
+                            )
+                    }),
+            @ApiResponse(responseCode = "400",
+                    content = @Content(schema = @Schema()))
+    })
     @GetMapping("/getOrdersByCustomer")
     public ResponseEntity<List<Order>> getOrdersByCustomer(@RequestParam String email) {
         try {
@@ -49,6 +81,18 @@ public class OrderController {
         }
     }
 
+    @Operation(summary = "Retrieve existing orders by product", description = "Retrieves all existing orders by product")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Order.class))
+                            )
+                    }),
+            @ApiResponse(responseCode = "400",
+                    content = @Content(schema = @Schema()))
+    })
     @GetMapping("/getOrdersByProduct")
     public ResponseEntity<List<Order>> getOrdersByProduct(@RequestParam String productName) {
         try {
@@ -63,6 +107,13 @@ public class OrderController {
         }
     }
 
+    @Operation(summary = "Create a new order", description = "Add a new order to the system")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+    })
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Order order) {
         try {

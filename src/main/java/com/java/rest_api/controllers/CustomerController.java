@@ -89,7 +89,7 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "Delete existing customers", description = "Deletes existing customer by email")
+    @Operation(summary = "Delete existing customer", description = "Deletes existing customer by email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = @Content(schema = @Schema(implementation = String.class))),
