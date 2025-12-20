@@ -48,4 +48,21 @@ public class OrderService {
 
         return orders;
     }
+
+    public com.java.rest_api.models.db.Order save(Order order) {
+        com.java.rest_api.models.db.Order dbOrder = new com.java.rest_api.models.db.Order();
+
+        dbOrder.setCustomerId(order.getCustomerId());
+        dbOrder.setProductId(order.getProductId());
+        dbOrder.setProductName(order.getProductName());
+        dbOrder.setQuantity(order.getQuantity());
+        dbOrder.setPrice(order.getPrice());
+
+        try {
+            return orderRepository.save(dbOrder);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
