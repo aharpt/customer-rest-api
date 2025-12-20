@@ -28,8 +28,8 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "400",
-                    content = @Content(schema = @Schema()))
+            @ApiResponse(responseCode = "500",
+                    content = @Content(schema = @Schema(implementation = String.class))),
     })
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Customer customer) {
@@ -41,7 +41,7 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "Retrieves existing customers", description = "Retrieves all existing customers")
+    @Operation(summary = "Retrieve existing customers", description = "Retrieves all existing customers")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = {
@@ -56,7 +56,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getCustomers());
     }
 
-    @Operation(summary = "Retrieves active customers", description = "Retrieves all existing active customers")
+    @Operation(summary = "Retrieve active customers", description = "Retrieves all existing active customers")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = {
@@ -71,7 +71,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getActiveCustomers());
     }
 
-    @Operation(summary = "Retrieves customer by email", description = "Retrieves existing customer by email")
+    @Operation(summary = "Retrieve customer by email", description = "Retrieves existing customer by email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Customer.class))),
@@ -89,7 +89,7 @@ public class CustomerController {
         }
     }
 
-    @Operation(summary = "Deletes existing customers", description = "Deletes existing customer by email")
+    @Operation(summary = "Delete existing customers", description = "Deletes existing customer by email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     content = @Content(schema = @Schema(implementation = String.class))),
