@@ -16,7 +16,6 @@ public class CustomerService {
 
     public com.java.rest_api.models.db.Customer save(Customer customer) {
         com.java.rest_api.models.db.Customer dbCustomer = new com.java.rest_api.models.db.Customer();
-
         dbCustomer.setFirstName(customer.getFirstName());
         dbCustomer.setLastName(customer.getLastName());
         dbCustomer.setEmail(customer.getEmail());
@@ -49,6 +48,7 @@ public class CustomerService {
 
         for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
             Customer customer = new Customer();
+            customer.setId(dbCustomer.getId());
             customer.setFirstName(dbCustomer.getFirstName());
             customer.setLastName(dbCustomer.getLastName());
             customer.setEmail(dbCustomer.getEmail());
@@ -65,6 +65,7 @@ public class CustomerService {
 
         for (com.java.rest_api.models.db.Customer dbCustomer : dbCustomers) {
             Customer customer = new Customer();
+            customer.setId(dbCustomer.getId());
             customer.setFirstName(dbCustomer.getFirstName());
             customer.setLastName(dbCustomer.getLastName());
             customer.setEmail(dbCustomer.getEmail());
@@ -83,7 +84,7 @@ public class CustomerService {
 
         if (dbCustomer != null) {
             Customer customer = new Customer();
-
+            customer.setId(dbCustomer.getId());
             customer.setFirstName(dbCustomer.getFirstName());
             customer.setLastName(dbCustomer.getLastName());
             customer.setEmail(dbCustomer.getEmail());
