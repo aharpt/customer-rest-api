@@ -30,7 +30,7 @@ public class SecurityConfig {
 
         for (com.java.rest_api.models.User dbUser : dbUsers) {
             UserDetails userDetails = User.withUsername(dbUser.getUsername())
-                    .password("{noop}" + dbUser.getPassword())
+                    .password("{bcrypt}" + dbUser.getPassword())
                     .roles(dbUser.getRole())
                     .build();
             users.add(userDetails);

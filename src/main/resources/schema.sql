@@ -11,10 +11,10 @@ create table if not exists users (
 );
 
 INSERT INTO users (username, password, user_role)
-VALUES ('admin', 'admin123', 'ADMIN');
+VALUES ('admin', '$2a$12$5ub3HPaLGVqeQYYrFVpKiuWB/jx02RJvWB8Aam.7phTRGl.r70LVK', 'ADMIN');
 
 INSERT INTO users (username, password, user_role)
-VALUES ('user', 'user123', 'APPLICANT');
+VALUES ('user', '$2a$12$3VA4EV5MlC0p5uqXfDbSx.jitxfmb1msfuG8TbULb2bBuI1hYXJiO', 'APPLICANT');
 
 create table if not exists customers (
     id bigserial primary key,
