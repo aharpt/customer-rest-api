@@ -1,6 +1,20 @@
+drop table if exists users;
 drop table if exists orders;
 drop table if exists customers;
 drop table if exists products;
+
+create table if not exists users (
+    id bigserial primary key,
+    username text unique not null,
+    password text not null,
+    user_role text not null
+);
+
+INSERT INTO users (username, password, user_role)
+VALUES ('admin', 'admin123', 'ADMIN');
+
+INSERT INTO users (username, password, user_role)
+VALUES ('user', 'user123', 'APPLICANT');
 
 create table if not exists customers (
     id bigserial primary key,

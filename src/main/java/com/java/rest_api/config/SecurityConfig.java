@@ -1,5 +1,7 @@
 package com.java.rest_api.config;
 
+import com.java.rest_api.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,22 +14,29 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private UserService userService;
+
     @Bean
     UserDetailsService userDetailsService() {
-        UserDetails admin = User.withUsername("admin")
-                .password("{noop}admin123")
-                .roles("ADMIN")
-                .build();
+        List<UserDetails> users = new ArrayList<>();
+        List<com.java.rest_api.models.User> dbUsers = userService.findAllUsers();
 
-        UserDetails applicant = User.withUsername("user")
-                .password("{noop}user123")
-                .roles("APPLICANT")
-                .build();
+        for (com.java.rest_api.models.User dbUser : dbUsers) {
+            UserDetails userDetails = User.withUsername(dbUser.getUsername())
+                    .password("{noop}" + dbUser.getPassword())
+                    .roles(dbUser.getRole())
+                    .build();
+            users.add(userDetails);
+        }
 
-        return new InMemoryUserDetailsManager(admin, applicant);
+        return new InMemoryUserDetailsManager(users);
     }
 
     @Bean
